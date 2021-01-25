@@ -1,6 +1,9 @@
 import random
 import json
 
+ANSWERS_FOR_UNRECOGNIZED_QUESTIONS = ['Я не понял твой вопрос', 'Вы что-то сказали?', 'Это вы на каком языке сказали',
+                                      'Я вас не понимаю', 'Простите, что?']
+
 
 def load_intents():
     with open('./static/data/intents.json') as file:
@@ -21,11 +24,15 @@ def load_intents():
 
 
 def get_answer_from_tag(tag):
-    responses = ''
+    response = ''
     add_info = ''
-    for tg in load_intents()["intents"]:
-        if tg['tag'] == tag:
-            responses = tg['response']
-            add_info = tg['add_info']
-    response = random.choice(responses)
+    if tag == 'unrecognized_question':
+        response = random.choice(ANSWERS_FOR_UNRECOGNIZED_QUESTIONS)
+        add_info = ''
+    else:
+        for tg in load_intents()["intents"]:
+            if tg['tag'] == tag:
+                response = tg['response']
+                add_info = tg['add_info']
+        response = random.choice(response)
     return response, add_info
