@@ -1,10 +1,11 @@
 from flask import Flask, jsonify, send_file
 from flask import request
 from classes.IntentClassifier import IntentClassifier
-from utils.AudioWorker import text_to_speech, speech_to_text
+from classes.Seq2Seq import Seq2SeqModel
+from utils.audio_worker import text_to_speech, speech_to_text
 from utils.intent_processing import get_answer_from_tag
 import os
-from utils.load_data import classes, model, tokenizer, label_encoder
+from utils.load_data import classes, ic_model, ic_tokenizer, label_encoder, seq2seq_model, seq2seq_tokenizer
 
 app = Flask(__name__)
 
@@ -16,7 +17,7 @@ def process_question(data):
     response = {
         "audio_answer": request.host_url + BASE_URL[1:] + 'audio_answer'
     }
-    intent_classifier = IntentClassifier(classes, model, tokenizer, label_encoder)
+    intent_classifier = IntentClassifier(classes, ic_model, ic_tokenizer, label_encoder)
     intent_tag = intent_classifier.get_intent(data['question'])
     data = get_answer_from_tag(intent_tag)
     if data[1] != '':
@@ -52,6 +53,12 @@ def get_audio_answer():
 @app.route(BASE_URL + 'test', methods=['GET'])
 def test():
     return os.path.join(os.getcwd() + app.config['UPLOAD_PATH'])
+
+
+@app.route(BASE_URL + 'test/seq2seq', methods=['POST'])
+def test_seq2seq():
+    seq2seq = Seq2SeqModel(seq2seq_model, seq2seq_tokenizer, 15)
+    return seq2seq.get_answer("Ты милый")
 
 
 if __name__ == '__main__':
