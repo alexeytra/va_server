@@ -4,6 +4,8 @@ from classes.Seq2Seq import Seq2SeqModel
 from classes.VAResponse import VAResponse
 from utils.audio_worker import text_to_speech, speech_to_text
 import os
+
+from utils.intent_processing import load_additional_info
 from utils.load_data import classes, ic_model, ic_tokenizer, label_encoder, seq2seq_model, seq2seq_tokenizer
 
 app = Flask(__name__)
@@ -37,7 +39,8 @@ def get_audio_answer():
 
 @app.route(BASE_URL + 'test', methods=['GET'])
 def test():
-    return os.path.join(os.getcwd() + app.config['UPLOAD_PATH'])
+    result = load_additional_info('системы информатики', 'kaf_location')
+    return 'test'
 
 
 @app.route(BASE_URL + 'test/seq2seq', methods=['POST'])

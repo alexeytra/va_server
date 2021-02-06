@@ -38,3 +38,13 @@ def get_answer_from_tag(tag):
                 add_info = tg['add_info']
         response = random.choice(response)
     return response, add_info
+
+
+def load_additional_info(name, tag):
+    print('ff')
+    tag = tag.split('_')[1]
+    with open('./static/data/info_data.json') as file:
+        data = json.load(file)
+    for key in data:
+        if data[key]["fullName"].lower() == name:
+            return data[key][tag]
