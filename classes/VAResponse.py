@@ -3,7 +3,7 @@ from datetime import date
 from yargy import Parser
 from yargy.pipelines import morph_pipeline
 
-from utils.KEY_WORDS import KEY_WORDS
+from utils.constants import KEY_WORDS
 from utils.audio_worker import text_to_speech
 from utils.intent_processing import get_answer_from_tag, load_additional_info
 from utils.load_data import classes, ic_model, ic_tokenizer, label_encoder, seq2seq_model, seq2seq_tokenizer
@@ -33,27 +33,11 @@ class VAResponse:
         intent_classifier = IntentClassifier(classes, ic_model, ic_tokenizer, label_encoder)
         intent_tag = intent_classifier.get_intent(self.__question)
         self.__intent_accuracy = intent_classifier.accuracy
+        self.__intent = intent_tag
         if intent_tag == 'unrecognized_question':
-            seq2seq = Seq2SeqModel(seq2seq_model, seq2seq_tokenizer, 15)
-            answer = seq2seq.get_answer(self.__question)
-            self.__answer = answer
-            self.__seq2seq = True
-            text_to_speech(answer)
+            self.__seq2seq_processing()
         else:
-            data = get_answer_from_tag(intent_tag)
-            self.__seq2seq = False
-            self.__intent = intent_tag
-            if data[1] != '':
-                answer = str(data[0] + ' ' + data[1])
-                text_to_speech(data[0])
-                self.__answer = answer
-                self.__seq2seq = False
-            else:
-                self.__answer = data[0]
-                text_to_speech(data[0])
-                if self.__extract_info() != '':
-                    self.__answer = self.__answer.replace('*', self.__struct_info)
-                    self.__answer += ' ' + self.__process_struct_info()
+            self.__intent_processing()
         self.__date_time = date.today()
 
     def __extract_info(self):
@@ -64,6 +48,28 @@ class VAResponse:
 
     def __process_struct_info(self):
         return load_additional_info(self.__struct_info.lower(), self.__intent)
+
+    def __seq2seq_processing(self):
+        seq2seq = Seq2SeqModel(seq2seq_model, seq2seq_tokenizer, 15)
+        answer = seq2seq.get_answer(self.__question)
+        self.__answer = answer
+        self.__seq2seq = True
+        text_to_speech(answer)
+
+    def __intent_processing(self):
+        data = get_answer_from_tag(self.__intent)
+        self.__seq2seq = False
+        if data[1] != '':
+            answer = str(data[0] + ' ' + data[1])
+            text_to_speech(data[0])
+            self.__answer = answer
+            self.__seq2seq = False
+        else:
+            self.__answer = data[0]
+            text_to_speech(data[0])
+            if self.__extract_info() != '':
+                self.__answer = self.__answer.replace('*', self.__struct_info)
+                self.__answer += ' ' + self.__process_struct_info()
 
     def get_response(self):
         return {

@@ -1,10 +1,7 @@
 import random
 import json
 
-ANSWERS_FOR_UNRECOGNIZED_QUESTIONS = ['Я не понял твой вопрос... 😔', 'Вы что-то сказали? 😁',
-                                      'Это вы на каком языке сказали? 🧐',
-                                      'Я вас не понимаю 🤪', 'Простите, что? 🤓',
-                                      'Я не понял, что вы сказали! Можете повторить? 🐔']
+from utils.constants import ANSWERS_FOR_UNRECOGNIZED_QUESTIONS
 
 
 def load_intents():
@@ -41,7 +38,6 @@ def get_answer_from_tag(tag):
 
 
 def load_additional_info(name, tag):
-    print('ff')
     tag = tag.split('_')[1]
     with open('./static/data/info_data.json') as file:
         data = json.load(file)
