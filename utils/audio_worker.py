@@ -1,5 +1,6 @@
 import requests
 import speech_recognition as sr
+import os
 
 
 def text_to_speech(text):
@@ -8,6 +9,9 @@ def text_to_speech(text):
           "text=" + text + \
           "&format=mp3&lang=ru-RU&speed=1.0&emotion=neutral&speaker=kostya&robot=1"
     r = requests.get(url)
+    if not os.path.isdir("./temp_data"):
+        os.mkdir("./temp_data")
+        
     with open('./temp_data/outputAudio.mp3', 'wb') as f:
         f.write(r.content)
 

@@ -5,7 +5,7 @@ from utils.constants import ANSWERS_FOR_UNRECOGNIZED_QUESTIONS
 
 
 def load_intents():
-    with open('./static/data/intents.json') as file:
+    with open('./static/data/intents.json', encoding='utf-8', mode='r') as file:
         data = json.load(file)
     intents = {
         'pattern': [],
