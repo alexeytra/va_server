@@ -11,7 +11,7 @@ def text_to_speech(text):
     r = requests.get(url)
     if not os.path.isdir("./temp_data"):
         os.mkdir("./temp_data")
-        
+
     with open('./temp_data/outputAudio.mp3', 'wb') as f:
         f.write(r.content)
 
