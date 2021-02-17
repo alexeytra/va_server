@@ -67,7 +67,8 @@ class VAResponse:
         else:
             self.__answer = data[0]
             text_to_speech(data[0])
-            if self.__extract_info() != '':
+            self.__extract_info()
+            if self.__struct_info != '':
                 self.__answer = self.__answer.replace('*', self.__struct_info)
                 self.__answer += ' ' + self.__process_struct_info()
 
