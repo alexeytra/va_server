@@ -2,7 +2,6 @@ from datetime import date
 from flask import request
 from yargy import Parser
 from yargy.pipelines import morph_pipeline
-
 from utils.constants import KEY_WORDS, BASE_URL
 from utils.audio_worker import text_to_speech
 from utils.intent_processing import get_answer_from_tag, load_additional_info
@@ -30,7 +29,7 @@ class VAResponse:
         parser = Parser(RULE)
         self.__parser = parser
         self.__process_question()
-        
+
     def __extract_info(self):
         if self.__parser.find(self.__question):
             extract_entity = [_.value for _ in self.__parser.find(self.__question).tokens]

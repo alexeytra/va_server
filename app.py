@@ -5,13 +5,10 @@ from classes.VAResponse import VAResponse
 from utils.constants import BASE_URL
 from utils.audio_worker import text_to_speech, speech_to_text
 import os
-
 from utils.intent_processing import load_additional_info
 from utils.load_data import classes, ic_model, ic_tokenizer, label_encoder, seq2seq_model, seq2seq_tokenizer
 
 app = Flask(__name__)
-
-
 app.config['UPLOAD_PATH'] = '/temp_data/'
 
 
