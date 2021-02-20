@@ -10,6 +10,7 @@ from utils.load_data import seq2seq_model, seq2seq_tokenizer
 
 app = Flask(__name__)
 app.config['UPLOAD_PATH'] = '/temp_data/'
+app.config['SECRET_KEY'] = 'df458dfsd785as1s4d5fd87'
 
 
 @app.route(BASE_URL + 'question/text', methods=['POST'])
