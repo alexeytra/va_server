@@ -2,23 +2,21 @@ from flask import Flask, send_file
 from flask import request
 from classes.Seq2Seq import Seq2SeqModel
 from classes.VAResponse import VAResponse
-from utils.audio_worker import text_to_speech, speech_to_text
+from utils.constants import BASE_URL
+from utils.audio_worker import speech_to_text
 import os
-
 from utils.intent_processing import load_additional_info
-from utils.load_data import classes, ic_model, ic_tokenizer, label_encoder, seq2seq_model, seq2seq_tokenizer
+from utils.load_data import seq2seq_model, seq2seq_tokenizer
 
 app = Flask(__name__)
-
-BASE_URL = '/va/api/v1/'
 app.config['UPLOAD_PATH'] = '/temp_data/'
+app.config['SECRET_KEY'] = 'df458dfsd785as1s4d5fd87'
 
 
 @app.route(BASE_URL + 'question/text', methods=['POST'])
 def process_question_text():
-    url_audio = request.host_url + BASE_URL[1:] + 'audio_answer'
     question = request.json['question']
-    va_response = VAResponse(url_audio, question)
+    va_response = VAResponse(question)
     return va_response.get_response()
 
 
@@ -26,9 +24,8 @@ def process_question_text():
 def process_question_audio():
     for f in request.files.getlist('audio'):
         f.save(os.path.join(os.getcwd() + app.config['UPLOAD_PATH'], f.filename))
-    url_audio = request.host_url + BASE_URL[1:] + 'audio_answer'
     question = speech_to_text("./temp_data/input.wav")
-    va_response = VAResponse(url_audio, question)
+    va_response = VAResponse(question)
     return va_response.get_response()
 
 
@@ -40,7 +37,7 @@ def get_audio_answer():
 @app.route(BASE_URL + 'test', methods=['GET'])
 def test():
     result = load_additional_info('системы информатики', 'kaf_location')
-    return 'test'
+    return result
 
 
 @app.route(BASE_URL + 'test/seq2seq', methods=['POST'])

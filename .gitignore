@@ -26,3 +26,4 @@ htmlcov/
 *,cover
 __pycache__
 temp_data/
+rest.http
