@@ -71,13 +71,17 @@ class VAResponse:
             self.__answer = answer
             self.__seq2seq = False
         else:
-            self.__answer = data[0]
-            if self.__voice:
-                text_to_speech(data[0])
             self.__extract_info()
+            self.__answer = data[0]
             if self.__struct_info != '':
                 self.__answer = self.__answer.replace('*', self.__struct_info)
                 self.__answer += ' ' + self.__process_struct_info()
+
+            if self.__struct_info == '' and '*' in data[0]:
+                self.__answer = 'Я не понял твой вопрос'
+
+            if self.__voice:
+                text_to_speech(self.__answer)
 
     def get_response(self):
         return {
