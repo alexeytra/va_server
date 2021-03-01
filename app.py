@@ -7,6 +7,7 @@ from utils.audio_worker import speech_to_text
 import os
 from utils.intent_processing import load_additional_info
 from utils.load_data import seq2seq_model, seq2seq_tokenizer
+from classes.EntityExtractor import EntityExtractor
 
 app = Flask(__name__)
 app.config['UPLOAD_PATH'] = '/temp_data/'
@@ -36,7 +37,8 @@ def get_audio_answer():
 
 @app.route(BASE_URL + 'test', methods=['GET'])
 def test():
-    result = load_additional_info('системы информатики', 'kaf_location')
+    entity_extractor = EntityExtractor()
+    result = entity_extractor.extract_entity('Я пришел на кафедру системы информатики')
     return result
 
 

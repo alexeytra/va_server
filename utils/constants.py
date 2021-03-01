@@ -35,3 +35,10 @@ CLASSROOMS = {
     '107': 'auditorium_107a',
     '155': 'auditorium_155',
 }
+
+BUILDINGS = {
+    'первый': 'building_1',
+    'второй': 'building_2',
+    'третий': 'building_3',
+    'четвертый': 'building_3',
+}
