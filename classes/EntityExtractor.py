@@ -21,7 +21,7 @@ class EntityExtractor:
             ]
         )
         self.__rule_build()
-    
+
     def __rule_build(self):
         DEPARTMENT = morph_pipeline(DEPARTMENTS).interpretation(
             self.__Intro.kaf.normalized().custom(DEPARTMENTS.get)

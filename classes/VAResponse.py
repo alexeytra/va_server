@@ -24,7 +24,6 @@ class VAResponse:
         self.__intent = ''
         self.__struct_info = ''
         self.__entity = {}
-        self.__date_time = ''
         self.__intent_accuracy = 0.0
         self.__process_question()
 
@@ -39,7 +38,7 @@ class VAResponse:
 
 
     def __process_question(self):
-        self.__extract_info()
+        # self.__extract_info()
 
         intent_classifier = IntentClassifier(classes, ic_model, ic_tokenizer, label_encoder)
         intent_tag = intent_classifier.get_intent(self.__question)
@@ -49,7 +48,6 @@ class VAResponse:
             self.__seq2seq_processing()
         else:
             self.__intent_processing()
-        self.__date_time = date.today()
 
     def __process_struct_info(self):
         return load_additional_info(self.__entity['key'], self.__intent)
@@ -72,18 +70,20 @@ class VAResponse:
             self.__answer = answer
             self.__seq2seq = False
         else:
-            if self.__entity['type'] == self.__intent.split('_')[0]:
-                self.__answer = data[0]
-                if self.__voice:
-                    text_to_speech(data[0])
-            # self.__extract_info()
-                if self.__struct_info != '':
+            self.__answer = data[0]
+            if self.__voice:
+                text_to_speech(data[0])
+            self.__extract_info()
+            if self.__struct_info != '':
+                if self.__entity['type'] == self.__intent.split('_')[0]:
                     self.__answer = self.__answer.replace('*', self.__struct_info)
+                    if self.__voice:
+                        text_to_speech(self.__answer)
                     self.__answer += ' ' + self.__process_struct_info()
-            else:
-                self.__answer = ANSWERS_FOR_UNRECOGNIZED_QUESTIONS[0]
-                if self.__voice:
-                    text_to_speech(data[0])
+                else:
+                    self.__answer = ANSWERS_FOR_UNRECOGNIZED_QUESTIONS[0]
+                    if self.__voice:
+                        text_to_speech(data[0])
 
 
     def get_response(self):
@@ -94,6 +94,6 @@ class VAResponse:
             "language": self.__language,
             "intent": self.__intent,
             "entity": self.__entity,
-            "dataTime": self.__date_time,
+            "dataTime": date.today(),
             "accuracy": round(float(self.__intent_accuracy), 3)
         }
