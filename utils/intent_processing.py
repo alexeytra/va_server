@@ -15,22 +15,22 @@ def load_intents():
     for intent in data["intents"]:
         for pattern in intent["patterns"]:
             intents['pattern'].append(pattern)
-            intents['label'].append(intent["tag"])
+            intents['label'].append(intent["intent"])
 
-            if intent["tag"] not in labels:
-                labels.append(intent["tag"])
+            if intent["intent"] not in labels:
+                labels.append(intent["intent"])
     return data
 
 
-def get_answer_from_tag(tag):
+def get_answer_from_tag(intent):
     response = ''
     add_info = ''
-    if tag == 'unrecognized_question':
+    if intent == 'unrecognized_question':
         response = random.choice(ANSWERS_FOR_UNRECOGNIZED_QUESTIONS)
         add_info = ''
     else:
         for tg in load_intents()["intents"]:
-            if tg['tag'] == tag:
+            if tg['intent'] == intent:
                 response = tg['response']
                 add_info = tg['add_info']
         response = random.choice(response)
