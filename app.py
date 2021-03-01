@@ -38,7 +38,7 @@ def get_audio_answer():
 @app.route(BASE_URL + 'test', methods=['GET'])
 def test():
     entity_extractor = EntityExtractor()
-    result = entity_extractor.extract_entity('Я пришел на кафедру системы информатики')
+    result = entity_extractor.extract_entity('Где находится кафедра системы информатики')
     return result
 
 

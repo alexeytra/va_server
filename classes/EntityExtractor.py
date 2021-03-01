@@ -2,7 +2,6 @@ from yargy import (
     Parser,
     rule, or_
 )
-from yargy.predicates import  normalized
 from yargy.pipelines import morph_pipeline
 from yargy.interpretation import (
     fact,
@@ -46,16 +45,16 @@ class EntityExtractor:
         TOKENIZER = MorphTokenizer().remove_types(EOL)
         parser = Parser(self.__INTRO, tokenizer=TOKENIZER)
         matches = list(parser.findall(text))
-        print(matches)
         if matches:
             match = matches[0]
             result = [_.value for _ in match.tokens]
-            enity = ' '.join(map(str, result))
+            entity = ' '.join(map(str, result))
             facts = match.fact
             fact = list(filter(lambda f: (f != None), facts ))
-            _type, fact = fact[0].split('_')
+            _type, key = fact[0].split('_')
             return {
-                'entity': enity,
-                'fact': fact,
+                'entity': entity,
+                'key': key,
                 'type': _type
             }
+        return {}
