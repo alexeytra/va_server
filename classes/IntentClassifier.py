@@ -13,7 +13,7 @@ class IntentClassifier:
     def get_intent(self, text):
         text = [text]
         test_keras = self.__tokenizer.texts_to_sequences(text)
-        test_keras_sequence = pad_sequences(test_keras, maxlen=8, padding='post')
+        test_keras_sequence = pad_sequences(test_keras, maxlen=9, padding='post')
         pred = self.__classifier.predict(test_keras_sequence)
         result_index = np.argmax(pred, 1)
         per_prediction = pred[0][result_index]
