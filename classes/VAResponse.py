@@ -60,30 +60,33 @@ class VAResponse:
         if self.__voice:
             text_to_speech(answer)
 
+    def __process_answer_with_add_info(self, data):
+        self.__answer = str(data[0] + ' ' + data[1])
+        if self.__voice:
+            text_to_speech(data[0])
+        self.__seq2seq = False
+
+    def __process_answer(self, data):
+        self.__answer = data[0]
+        self.__extract_info()
+        if self.__struct_info != '':
+            if self.__entity['type'] == self.__intent.split('_')[0]:
+                self.__answer = self.__answer.replace('*', self.__struct_info)
+                if self.__voice:
+                    text_to_speech(self.__answer)
+                self.__answer += ' ' + self.__process_struct_info()
+            else:
+                self.__answer = ANSWERS_FOR_UNRECOGNIZED_QUESTIONS[0]
+                if self.__voice:
+                    text_to_speech(data[0])
+
     def __intent_processing(self):
         data = get_answer_from_tag(self.__intent)
         self.__seq2seq = False
         if data[1] != '':
-            answer = str(data[0] + ' ' + data[1])
-            if self.__voice:
-                text_to_speech(data[0])
-            self.__answer = answer
-            self.__seq2seq = False
+            self.__process_answer_with_add_info(data)
         else:
-            self.__extract_info()
-            self.__answer = data[0]
-            if self.__struct_info != '':
-                if self.__entity['type'] == self.__intent.split('_')[0]:
-                    self.__answer = self.__answer.replace('*', self.__struct_info)
-                    if self.__voice:
-                        text_to_speech(self.__answer)
-                    self.__answer += ' ' + self.__process_struct_info()
-                else:
-                    self.__answer = ANSWERS_FOR_UNRECOGNIZED_QUESTIONS[0]
-                    if self.__voice:
-                        text_to_speech(data[0])
-
-
+            self.__process_answer(data)
             if self.__struct_info == '' and '*' in data[0]:
                 self.__answer = 'Я не понял твой вопрос'
 
@@ -99,5 +102,6 @@ class VAResponse:
             "intent": self.__intent,
             "entity": self.__entity,
             "dataTime": date.today(),
-            "accuracy": round(float(self.__intent_accuracy), 3)
+            "accuracy": round(float(self.__intent_accuracy), 3),
+            "version": "1.0.5"
         }

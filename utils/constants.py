@@ -23,22 +23,22 @@ DEPARTMENTS = {
 }
 
 CLASSROOMS = {
-    '100': 'auditorium_100',
-    '101': 'auditorium_101',
-    '101а': 'auditorium_101a',
-    '101б': 'auditorium_101б',
-    '102': 'auditorium_102',
-    '103': 'auditorium_103',
-    '104': 'auditorium_104',
-    '106': 'auditorium_106',
-    '107': 'auditorium_107',
-    '107': 'auditorium_107a',
-    '155': 'auditorium_155',
+    '100': 'auditorium_aud100',
+    '101': 'auditorium_aud101',
+    '101а': 'auditorium_aud101a',
+    '101б': 'auditorium_aud101б',
+    '102': 'auditorium_aud102',
+    '103': 'auditorium_aud103',
+    '104': 'auditorium_aud104',
+    '106': 'auditorium_aud106',
+    '107': 'auditorium_aud107',
+    '107': 'auditorium_aud107a',
+    '155': 'auditorium_aud155',
 }
 
 BUILDINGS = {
-    'первый': 'building_1',
-    'второй': 'building_2',
-    'третий': 'building_3',
-    'четвертый': 'building_3',
+    'первый корпус': 'building_build1',
+    'второй корпус': 'building_build2',
+    'третий корпус': 'building_build3',
+    'четвертый корпус': 'building_build4',
 }

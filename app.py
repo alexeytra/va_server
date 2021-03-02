@@ -5,7 +5,6 @@ from classes.VAResponse import VAResponse
 from utils.constants import BASE_URL
 from utils.audio_worker import speech_to_text
 import os
-from utils.intent_processing import load_additional_info
 from utils.load_data import seq2seq_model, seq2seq_tokenizer
 from classes.EntityExtractor import EntityExtractor
 
