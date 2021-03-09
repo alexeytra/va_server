@@ -1,6 +1,6 @@
 from datetime import date
 from flask import request
-from utils.constants import KEY_WORDS, BASE_URL
+from utils.constants import BASE_URL
 from utils.audio_worker import text_to_speech
 from utils.intent_processing import get_answer_from_tag, load_additional_info
 from utils.load_data import classes, ic_model, ic_tokenizer, label_encoder, seq2seq_model, seq2seq_tokenizer
