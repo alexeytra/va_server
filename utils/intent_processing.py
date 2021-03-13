@@ -37,10 +37,8 @@ def get_answer_from_tag(intent):
     return response, add_info
 
 
-def load_additional_info(name, tag):
+def load_additional_info(key, tag):
     tag = tag.split('_')[1]
-    with open('./static/data/info_data.json') as file:
+    with open('./static/data/info_data.json', encoding='utf-8', mode='r') as file:
         data = json.load(file)
-    for key in data:
-        if data[key]["fullName"].lower() == name:
-            return data[key][tag]
+    return data[key][tag]
