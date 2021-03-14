@@ -32,7 +32,7 @@ CLASSROOMS = {
     '104': 'auditorium_aud104',
     '106': 'auditorium_aud106',
     '107': 'auditorium_aud107',
-    '107': 'auditorium_aud107a',
+    '107a': 'auditorium_aud107a',
     '155': 'auditorium_aud155',
 }
 
