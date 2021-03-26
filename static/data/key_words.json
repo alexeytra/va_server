@@ -1,0 +1,99 @@
+{
+  "keyWords": [
+    {
+      "code": "kaf_si",
+      "classifier": "DEPARTMENT",
+      "keyWords": ["системы информатики", "СИ"]
+    },
+    {
+      "code": "kaf_evs",
+      "classifier": "DEPARTMENT",
+      "keyWords": ["Электронно-вычислительные системы", "Электронно вычислительные системы", "ЭВС"]
+    },
+    {
+      "code": "kaf_tes",
+      "classifier": "DEPARTMENT",
+      "keyWords": ["Тепловые электрические станциии", "ТЭС"]
+    },
+    {
+      "code": "fac_sf",
+      "classifier": "FACULTY",
+      "keyWords": ["Строительный факультет", "СФ", "строительного"]
+    },
+    {
+      "code": "auditorium_aud100",
+      "classifier": "AUDITORIUM",
+      "keyWords": ["100", "сотая"]
+    },
+    {
+      "code": "auditorium_aud101",
+      "classifier": "AUDITORIUM",
+      "keyWords": ["101"]
+    },
+    {
+      "code": "auditorium_aud101a",
+      "classifier": "AUDITORIUM",
+      "keyWords": ["101а"]
+    },
+    {
+      "code": "auditorium_aud101б",
+      "classifier": "AUDITORIUM",
+      "keyWords": ["101б"]
+    },
+    {
+      "code": "auditorium_aud102",
+      "classifier": "AUDITORIUM",
+      "keyWords": ["102"]
+    },
+    {
+      "code": "auditorium_aud103",
+      "classifier": "AUDITORIUM",
+      "keyWords": ["103"]
+    },
+    {
+      "code": "auditorium_aud104",
+      "classifier": "AUDITORIUM",
+      "keyWords": ["104"]
+    },
+    {
+      "code": "auditorium_aud106",
+      "classifier": "AUDITORIUM",
+      "keyWords": ["106"]
+    },
+    {
+      "code": "auditorium_aud107",
+      "classifier": "AUDITORIUM",
+      "keyWords": ["107"]
+    },
+    {
+      "code": "auditorium_aud107a",
+      "classifier": "AUDITORIUM",
+      "keyWords": ["107a"]
+    },
+    {
+      "code": "auditorium_aud155",
+      "classifier": "AUDITORIUM",
+      "keyWords": ["155"]
+    },
+    {
+      "code": "building_build1",
+      "classifier": "BUILDING",
+      "keyWords": ["первый корпус", "1 корпус", "корпус №1", "корпус номер 1"]
+    },
+    {
+      "code": "building_build2",
+      "classifier": "BUILDING",
+      "keyWords": ["второй корпус", "2 корпус", "корпус №2", "корпус номер 2"]
+    },
+    {
+      "code": "building_build3",
+      "classifier": "BUILDING",
+      "keyWords": ["третий корпус", "3 корпус", "корпус №3", "корпус номер 3"]
+    },
+    {
+      "code": "building_build4",
+      "classifier": "BUILDING",
+      "keyWords": ["четвертый корпус", "4 корпус", "корпус №4", "корпус номер 4"]
+    }
+  ]
+}
