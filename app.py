@@ -10,7 +10,7 @@ from classes.EntityExtractor import EntityExtractor
 
 app = Flask(__name__)
 app.config['UPLOAD_PATH'] = '/temp_data/'
-app.config['SECRET_KEY'] = 'df458dfsd785as1s4d5fd87'
+app.config['SECRET_KEY'] = 'df458dfsd785as-1s4d5fd87-54fg45f7gdf4gd-sr7g65df4g'
 
 
 @app.route(BASE_URL + 'question/text', methods=['POST'])
