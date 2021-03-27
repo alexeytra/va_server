@@ -1,23 +1,24 @@
 from datetime import date
 from flask import request
-from utils.constants import BASE_URL
+from utils.constants import BASE_URL, ANSWERS_FOR_UNRECOGNIZED_QUESTIONS
 from utils.audio_worker import text_to_speech
 from utils.intent_processing import get_answer_from_tag, load_additional_info
 from utils.load_data import classes, ic_model, ic_tokenizer, label_encoder, seq2seq_model, seq2seq_tokenizer
-from utils.constants import ANSWERS_FOR_UNRECOGNIZED_QUESTIONS
 from classes.IntentClassifier import IntentClassifier
 from classes.Seq2Seq import Seq2SeqModel
 from classes.EntityExtractor import EntityExtractor
+import random
 
 
-class VAResponse:
-    def __init__(self, question, voice=False):
+class DialogManager:
+    def __init__(self, question, voice=False, answer_generating=False):
         if voice:
             self.__url_audio = request.host_url + BASE_URL[1:] + 'audio_answer'
         else:
             self.__url_audio = ''
         self.__question = question
         self.__voice = voice
+        self.__answer_generating = answer_generating
         self.__answer = ''
         self.__seq2seq = False
         self.__language = 'ru'
@@ -28,8 +29,8 @@ class VAResponse:
         self.__process_question()
 
     def __extract_info(self):
-        entitty_extractor = EntityExtractor()
-        self.__entity = entitty_extractor.extract_entity(self.__question)
+        entity_extractor = EntityExtractor()
+        self.__entity = entity_extractor.extract_entity(self.__question)
         if self.__entity:
             self.__struct_info = self.__entity['entity']
             self.__question = self.__question.replace(self.__struct_info, '').strip()
@@ -44,8 +45,13 @@ class VAResponse:
         intent_tag = intent_classifier.get_intent(self.__question)
         self.__intent_accuracy = intent_classifier.accuracy
         self.__intent = intent_tag
-        if intent_tag == 'unrecognized_question':
+
+        if intent_tag == 'unrecognized_question' and self.__answer_generating:
             self.__seq2seq_processing()
+        elif intent_tag == 'unrecognized_question' and not self.__answer_generating:
+            self.__answer = random.choice(ANSWERS_FOR_UNRECOGNIZED_QUESTIONS)
+            if self.__voice:
+                text_to_speech(self.__answer)
         else:
             self.__intent_processing()
 
@@ -76,7 +82,7 @@ class VAResponse:
                     text_to_speech(self.__answer)
                 self.__answer += ' ' + self.__process_struct_info()
             else:
-                self.__answer = ANSWERS_FOR_UNRECOGNIZED_QUESTIONS[0]
+                self.__answer = random.choice(ANSWERS_FOR_UNRECOGNIZED_QUESTIONS)
                 if self.__voice:
                     text_to_speech(data[0])
 
