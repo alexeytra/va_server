@@ -16,7 +16,7 @@ app.config['SECRET_KEY'] = 'df458dfsd785as1s4d5fd87'
 @app.route(BASE_URL + 'question/text', methods=['POST'])
 def process_question_text():
     question = request.json['question']
-    va_response = DialogManager(question, seq2seq=True)
+    va_response = DialogManager(question, answer_generating=True)
     return va_response.get_response()
 
 
