@@ -1,7 +1,7 @@
 from flask import Flask, send_file
 from flask import request
 from classes.Seq2Seq import Seq2SeqModel
-from classes.VAResponse import VAResponse
+from classes.DialogManager import DialogManager
 from utils.constants import BASE_URL
 from utils.audio_worker import speech_to_text
 import os
@@ -16,7 +16,7 @@ app.config['SECRET_KEY'] = 'df458dfsd785as-1s4d5fd87-54fg45f7gdf4gd-sr7g65df4g'
 @app.route(BASE_URL + 'question/text', methods=['POST'])
 def process_question_text():
     question = request.json['question']
-    va_response = VAResponse(question)
+    va_response = DialogManager(question, answer_generating=True)
     return va_response.get_response()
 
 
@@ -25,11 +25,11 @@ def process_question_audio():
     for f in request.files.getlist('audio'):
         f.save(os.path.join(os.getcwd() + app.config['UPLOAD_PATH'], f.filename))
     question = speech_to_text("./temp_data/input.wav")
-    va_response = VAResponse(question)
+    va_response = DialogManager(question)
     return va_response.get_response()
 
 
-@app.route(BASE_URL + 'audio_answer', methods=['GET'])
+@app.route(BASE_URL + 'audio/answer', methods=['GET'])
 def get_audio_answer():
     return send_file('temp_data/outputAudio.mp3')
 
