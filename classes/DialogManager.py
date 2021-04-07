@@ -3,7 +3,7 @@ from flask import request
 from utils.constants import BASE_URL, ANSWERS_FOR_UNRECOGNIZED_QUESTIONS
 from utils.audio_worker import text_to_speech
 from utils.intent_processing import get_answer_from_tag, load_additional_info
-from utils.load_data import classes, ic_model, ic_tokenizer, label_encoder, seq2seq_model, seq2seq_tokenizer
+from utils.load_data import classes, ic_model, ic_tokenizer, label_encoder, seq2seq_model, seq2seq_tokenizer, max_len
 from classes.IntentClassifier import IntentClassifier
 from classes.Seq2Seq import Seq2SeqModel
 from classes.EntityExtractor import EntityExtractor
@@ -41,7 +41,7 @@ class DialogManager:
     def __process_question(self):
         # self.__extract_info()
 
-        intent_classifier = IntentClassifier(classes, ic_model, ic_tokenizer, label_encoder)
+        intent_classifier = IntentClassifier(classes, ic_model, ic_tokenizer, label_encoder, max_len)
         intent_tag = intent_classifier.get_intent(self.__question)
         self.__intent_accuracy = intent_classifier.accuracy
         self.__intent = intent_tag
