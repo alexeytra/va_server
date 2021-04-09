@@ -25,16 +25,21 @@ def load_intents():
 def get_answer_from_tag(intent):
     response = ''
     add_info = ''
+    optional_questions = []
     if intent == 'unrecognized_question':
         response = random.choice(ANSWERS_FOR_UNRECOGNIZED_QUESTIONS)
         add_info = ''
     else:
         for tg in load_intents()["intents"]:
             if tg['intent'] == intent:
-                response = tg['response']
-                add_info = tg['add_info']
+                try:
+                    response = tg['response']
+                    add_info = tg['add_info']
+                    optional_questions = tg['options_for_questions']
+                except KeyError:
+                    pass
         response = random.choice(response)
-    return response, add_info
+    return response, add_info, optional_questions
 
 
 def load_additional_info(key, tag):
