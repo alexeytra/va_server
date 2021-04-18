@@ -26,6 +26,7 @@ CLASSROOMS = {
     '102': 'auditorium_aud102',
     '103': 'auditorium_aud103',
     '104': 'auditorium_aud104',
+    '105': 'auditorium_aud105',
     '106': 'auditorium_aud106',
     '107': 'auditorium_aud107',
     '107a': 'auditorium_aud107a',
