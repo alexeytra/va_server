@@ -60,7 +60,7 @@ class DialogManager:
         return load_additional_info(self.__entity['key'], self.__intent)
 
     def __seq2seq_processing(self):
-        seq2seq = Seq2SeqModel(seq2seq_model, seq2seq_tokenizer, 15)
+        seq2seq = Seq2SeqModel(seq2seq_model, seq2seq_tokenizer, 25)
         answer = seq2seq.get_answer(self.__question)
         self.__answer = answer
         self.__seq2seq = True

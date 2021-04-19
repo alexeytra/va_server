@@ -34,7 +34,7 @@ def get_answer_from_tag(intent):
             if tg['intent'] == intent:
                 try:
                     response = tg['response']
-                    add_info = tg['add_info']
+                    add_info = tg['additional_info']
                     optional_questions = tg['options_for_questions']
                 except KeyError:
                     pass

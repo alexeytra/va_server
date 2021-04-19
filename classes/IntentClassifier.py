@@ -19,7 +19,7 @@ class IntentClassifier:
         result_index = np.argmax(pred, 1)
         per_prediction = pred[0][result_index]
         self.__accuracy = per_prediction[0]
-        if per_prediction[0] >= .80:
+        if per_prediction[0] >= .95:
             return self.__label_encoder.inverse_transform(np.argmax(pred, 1))[0]
         else:
             return 'unrecognized_question'

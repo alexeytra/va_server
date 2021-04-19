@@ -56,7 +56,7 @@ class Seq2SeqModel:
             sampled_word_index = np.argmax(dec_outputs[0, 0, :])
 
             word = self.__tokenizer.index_word[sampled_word_index]
-            if word == 'end' or len(decoded_translation.split()) > 21:
+            if word == 'end' or len(decoded_translation.split()) > 25:
                 stop_condition = True
             else:
                 decoded_translation += ' {}'.format(word)
