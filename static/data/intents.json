@@ -3366,13 +3366,13 @@
       "intent": "unrecognized_question",
       "description": "",
       "patterns": [
-        "OOV OOV OOV",
-        "OOV OOV",
-        "OOV OOV OOV OOV OOV OOV",
-        "OOV OOV OOV OOV"
+        "error error error",
+        "error error",
+        "error error error error error error",
+        "error error error error"
       ],
       "response": [
-
+        "error"
       ],
       "additional_response": "",
       "additional_info": "",
