@@ -40,7 +40,7 @@ class DialogManager:
 
 
     def __process_question(self):
-        # self.__extract_info()
+        self.__extract_info()
 
         intent_classifier = IntentClassifier(classes, ic_model, ic_tokenizer, label_encoder, max_len)
         intent_tag = intent_classifier.get_intent(self.__question)
@@ -75,7 +75,7 @@ class DialogManager:
 
     def __process_answer(self, data):
         self.__answer = data[0]
-        self.__extract_info()
+        # self.__extract_info()
         if self.__struct_info != '':
             if self.__entity['type'] == self.__intent.split('_')[0]:
                 self.__answer = self.__answer.replace('*', self.__struct_info)

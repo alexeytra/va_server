@@ -27,5 +27,4 @@ htmlcov/
 __pycache__
 temp_data/
 requests
-static/data/intent_classifier/
 static/data/seq2seq/
