@@ -3361,22 +3361,6 @@
         "Почта профсоюзной организации",
         "Как мне найти профком"
       ]
-    },
-    {
-      "intent": "unrecognized_question",
-      "description": "",
-      "patterns": [
-        "error error error",
-        "error error",
-        "error error error error error error",
-        "error error error error"
-      ],
-      "response": [
-        "error"
-      ],
-      "additional_response": "",
-      "additional_info": "",
-      "options_for_questions": []
     }
   ]
 }
