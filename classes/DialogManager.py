@@ -111,6 +111,6 @@ class DialogManager:
             "entity": self.__entity,
             "dataTime": datetime.now(),
             "accuracy": round(float(self.__intent_accuracy), 3),
-            "optionsForQuestions": self.__options_for_questions,
+            "optionalQuestions": self.__options_for_questions,
             "version": "1.0.5"
         }
