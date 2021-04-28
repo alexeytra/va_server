@@ -27,6 +27,7 @@ class DialogManager:
         self.__entity = {}
         self.__intent_accuracy = 0.0
         self.__options_for_questions = []
+        self.__additional_response = ""
         self.__process_question()
 
     def __extract_info(self):
@@ -90,6 +91,7 @@ class DialogManager:
     def __intent_processing(self):
         data = get_answer_from_tag(self.__intent)
         self.__options_for_questions = data[2]
+        self.__additional_response = data[3]
         self.__seq2seq = False
         if data[1] != '':
             self.__process_answer_with_add_info(data)
@@ -112,5 +114,6 @@ class DialogManager:
             "dataTime": datetime.now(),
             "accuracy": round(float(self.__intent_accuracy), 3),
             "optionalQuestions": self.__options_for_questions,
+            "additionalResponse": self.__additional_response,
             "version": "1.0.5"
         }
