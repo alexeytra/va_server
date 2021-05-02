@@ -13,7 +13,7 @@ import random
 class DialogManager:
     def __init__(self, question, voice=False, answer_generating=False):
         if voice:
-            self.__url_audio = request.host_url + BASE_URL[1:] + 'audio_answer'
+            self.__url_audio = request.host_url + BASE_URL[1:] + 'audio/answer'
         else:
             self.__url_audio = ''
         self.__question = question
@@ -38,7 +38,6 @@ class DialogManager:
             self.__question = self.__question.replace(self.__struct_info, '').strip()
         else:
             self.__struct_info = ''
-
 
     def __process_question(self):
         self.__extract_info()
@@ -107,7 +106,7 @@ class DialogManager:
         return {
             "audioAnswer": self.__url_audio,
             "answer": self.__answer,
-            "seq2seq": self.__seq2seq,
+            "model": 'Seq2seqModel' if self.__seq2seq else 'IntentClassifierModel',
             "language": self.__language,
             "intent": self.__intent,
             "entity": self.__entity,
