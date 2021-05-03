@@ -16,7 +16,8 @@ app.config['SECRET_KEY'] = 'df458dfsd785as-1s4d5fd87-54fg45f7gdf4gd-sr7g65df4g'
 @app.route(BASE_URL + 'question/text', methods=['POST'])
 def process_question_text():
     question = request.json['question']
-    va_response = DialogManager(question, answer_generating=True, voice=False)
+    va_response = DialogManager(answer_generating=True, voice=False)
+    va_response.process_question(question)
     return va_response.get_response()
 
 
@@ -29,9 +30,17 @@ def process_question_audio():
     return va_response.get_response()
 
 
-@app.route(BASE_URL + 'audio/answer', methods=['GET'])
+@app.route(BASE_URL + 'answer/audio', methods=['GET'])
 def get_audio_answer():
     return send_file('temp_data/outputAudio.mp3')
+
+
+@app.route(BASE_URL + 'answer/wrong', methods=['POST'])
+def process_wrong_answer():
+    data = request.json
+    va_response = DialogManager(answer_generating=True, voice=False)
+    va_response.process_wrong_answer(data)
+    return va_response.get_response()
 
 
 @app.route(BASE_URL + 'test', methods=['GET'])

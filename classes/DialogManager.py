@@ -11,12 +11,12 @@ import random
 
 
 class DialogManager:
-    def __init__(self, question, voice=False, answer_generating=False):
+    def __init__(self, voice=False, answer_generating=False):
         if voice:
-            self.__url_audio = request.host_url + BASE_URL[1:] + 'audio/answer'
+            self.__url_audio = request.host_url + BASE_URL[1:] + 'answer/audio'
         else:
             self.__url_audio = ''
-        self.__question = question
+        self.__question = ''
         self.__voice = voice
         self.__answer_generating = answer_generating
         self.__answer = ''
@@ -28,7 +28,6 @@ class DialogManager:
         self.__intent_accuracy = 0.0
         self.__options_for_questions = []
         self.__additional_response = ""
-        self.__process_question()
 
     def __extract_info(self):
         entity_extractor = EntityExtractor()
@@ -39,7 +38,8 @@ class DialogManager:
         else:
             self.__struct_info = ''
 
-    def __process_question(self):
+    def process_question(self, question):
+        self.__question = question
         self.__extract_info()
 
         intent_classifier = IntentClassifier(classes, ic_model, ic_tokenizer, label_encoder, max_len)
@@ -55,6 +55,9 @@ class DialogManager:
                 text_to_speech(self.__answer)
         else:
             self.__intent_processing()
+
+    def process_wrong_answer(self, data):
+        self.__answer = 'Упс я что-то сказал неправильно'
 
     def __process_struct_info(self):
         return load_additional_info(self.__entity['key'], self.__intent)
