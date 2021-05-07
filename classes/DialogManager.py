@@ -1,6 +1,6 @@
 from datetime import datetime
 from flask import request
-from utils.constants import BASE_URL, ANSWERS_FOR_UNRECOGNIZED_QUESTIONS
+from utils.constants import BASE_URL, ANSWERS_FOR_UNRECOGNIZED_QUESTIONS, ANSWERS_FOR_WRONG_ANSWERS
 from utils.audio_worker import text_to_speech
 from utils.intent_processing import get_answer_from_tag, load_additional_info
 from utils.load_data import classes, ic_model, ic_tokenizer, label_encoder, seq2seq_model, seq2seq_tokenizer, max_len
@@ -57,7 +57,8 @@ class DialogManager:
             self.__intent_processing()
 
     def process_wrong_answer(self, data):
-        self.__answer = 'Упс я что-то сказал неправильно'
+        self.__answer = random.choice(ANSWERS_FOR_WRONG_ANSWERS)
+        text_to_speech(self.__answer)
 
     def __process_struct_info(self):
         return load_additional_info(self.__entity['key'], self.__intent)

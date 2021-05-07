@@ -30,8 +30,8 @@ class Seq2SeqModel:
         encoder_model = Model(encoder_inputs, encoder_states)
 
         decoder_inputs = self.__model.input[1]
-        decoder_state_input_h = Input(shape=(200,), name='decoderStateInput_h')
-        decoder_state_input_c = Input(shape=(200,), name='decoderStateInput_c')
+        decoder_state_input_h = Input(shape=(512,), name='decoderStateInput_h')
+        decoder_state_input_c = Input(shape=(512,), name='decoderStateInput_c')
 
         decoder_states_inputs = [decoder_state_input_h, decoder_state_input_c]
         decoder_embedding = self.__model.layers[3](decoder_inputs)
