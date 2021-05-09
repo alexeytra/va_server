@@ -1,6 +1,7 @@
 from datetime import datetime
 from flask import request
-from utils.constants import BASE_URL, ANSWERS_FOR_UNRECOGNIZED_QUESTIONS, ANSWERS_FOR_WRONG_ANSWERS
+from utils.constants import BASE_URL, ANSWERS_FOR_UNRECOGNIZED_QUESTIONS, ANSWERS_FOR_WRONG_ANSWERS, \
+    ANSWERS_FOR_GOOD_RESPONSE
 from utils.audio_worker import text_to_speech
 from utils.intent_processing import get_answer_from_tag, load_additional_info
 from utils.load_data import classes, ic_model, ic_tokenizer, label_encoder, seq2seq_model, seq2seq_tokenizer, max_len
@@ -40,6 +41,9 @@ class DialogManager:
 
     def process_question(self, question):
         self.__question = question
+        if self.__question == '👍':
+            self.__process_good_response()
+            return
         self.__extract_info()
 
         intent_classifier = IntentClassifier(classes, ic_model, ic_tokenizer, label_encoder, max_len)
@@ -105,6 +109,11 @@ class DialogManager:
 
             if self.__voice:
                 text_to_speech(self.__answer)
+
+    def __process_good_response(self):
+        self.__answer = random.choice(ANSWERS_FOR_GOOD_RESPONSE)
+        if self.__voice:
+            text_to_speech(self.__answer)
 
     def get_response(self):
         return {
