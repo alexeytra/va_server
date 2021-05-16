@@ -1,4 +1,4 @@
-from flask import Flask, send_file
+from flask import Flask, send_file, Response
 from flask import request
 from classes.Seq2Seq import Seq2SeqModel
 from classes.DialogManager import DialogManager
@@ -43,6 +43,12 @@ def process_wrong_answer():
     va_response = DialogManager(answer_generating=True, voice=False)
     va_response.process_wrong_answer(data)
     return va_response.get_response()
+
+
+@app.route(BASE_URL + 'review', methods=['POST'])
+def process_review():
+    data = request.json
+    return Response(status=200)
 
 
 @app.route(BASE_URL + 'test', methods=['GET'])
