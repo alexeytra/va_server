@@ -2,7 +2,7 @@ from flask import Flask, send_file, Response
 from flask import request
 from classes.Seq2Seq import Seq2SeqModel
 from classes.DialogManager import DialogManager
-from utils.constants import BASE_URL
+from constants.constants import BASE_URL
 from utils.audio_worker import speech_to_text
 import os
 from utils.load_data import seq2seq_model, seq2seq_tokenizer
@@ -49,6 +49,20 @@ def process_wrong_answer():
 def process_review():
     data = request.json
     return Response(status=200)
+
+
+@app.route(BASE_URL + 'greeting', methods=['POST'])
+def process_greeting():
+    va_response = DialogManager(voice=request.json['voice'])
+    va_response.greeting()
+    return va_response.get_response()
+
+
+@app.route(BASE_URL + 'user/greeting', methods=['POST'])
+def process_user_greeting():
+    va_response = DialogManager(voice=request.json['voice'])
+    va_response.user_greeting(request.json)
+    return va_response.get_response()
 
 
 @app.route(BASE_URL + 'test', methods=['GET'])
