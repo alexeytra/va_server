@@ -1,5 +1,7 @@
 from datetime import datetime
 from flask import request
+
+from utils.user import *
 from constants.constants import BASE_URL, ANSWERS_FOR_UNRECOGNIZED_QUESTIONS, ANSWERS_FOR_WRONG_ANSWERS, \
     ANSWERS_FOR_GOOD_RESPONSE, GREETING_RESPONSE
 from utils.audio_worker import text_to_speech
@@ -134,8 +136,10 @@ class DialogManager:
 
     def user_greeting(self, data):
         user_type = data['userType']
-        user_toke = data['userToken']
+        access_token = data['accessToken']
         self.__process_greeting()
+        user_name = get_user_name(user_type, access_token)
+        self.__answer += ', ' + user_name + '! ' + random.choice(GREETING_RESPONSE)
         if self.__voice:
             text_to_speech(self.__answer)
 
