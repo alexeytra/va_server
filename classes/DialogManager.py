@@ -1,7 +1,7 @@
 from datetime import datetime
 from flask import request
-from utils.constants import BASE_URL, ANSWERS_FOR_UNRECOGNIZED_QUESTIONS, ANSWERS_FOR_WRONG_ANSWERS, \
-    ANSWERS_FOR_GOOD_RESPONSE
+from constants.constants import BASE_URL, ANSWERS_FOR_UNRECOGNIZED_QUESTIONS, ANSWERS_FOR_WRONG_ANSWERS, \
+    ANSWERS_FOR_GOOD_RESPONSE, GREETING_RESPONSE
 from utils.audio_worker import text_to_speech
 from utils.intent_processing import get_answer_from_tag, load_additional_info
 from utils.load_data import classes, ic_model, ic_tokenizer, label_encoder, seq2seq_model, seq2seq_tokenizer, max_len
@@ -112,6 +112,30 @@ class DialogManager:
 
     def __process_good_response(self):
         self.__answer = random.choice(ANSWERS_FOR_GOOD_RESPONSE)
+        if self.__voice:
+            text_to_speech(self.__answer)
+
+    def __process_greeting(self):
+        hour = datetime.now().time().hour
+        if 6 <= hour < 12:
+            self.__answer = 'Доброе утро'
+        elif 12 <= hour < 18:
+            self.__answer = 'Добрый день'
+        elif 18 <= hour < 24:
+            self.__answer = 'Добрый вечер'
+        elif 0 < hour < 6:
+            self.__answer = 'Доброй ночи'
+
+    def greeting(self):
+        self.__process_greeting()
+        self.__answer += '! ' + random.choice(GREETING_RESPONSE)
+        if self.__voice:
+            text_to_speech(self.__answer)
+
+    def user_greeting(self, data):
+        user_type = data['userType']
+        user_toke = data['userToken']
+        self.__process_greeting()
         if self.__voice:
             text_to_speech(self.__answer)
 

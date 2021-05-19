@@ -8,7 +8,7 @@ from yargy.interpretation import (
     attribute
 )
 from yargy.tokenizer import MorphTokenizer, EOL
-from utils.constants import DEPARTMENTS, CLASSROOMS, BUILDINGS
+from constants.constants import DEPARTMENTS, CLASSROOMS, BUILDINGS
 
 class EntityExtractor:
     def __init__(self) -> None:

@@ -1,7 +1,7 @@
 import random
 import json
 
-from utils.constants import ANSWERS_FOR_UNRECOGNIZED_QUESTIONS
+from constants.constants import ANSWERS_FOR_UNRECOGNIZED_QUESTIONS
 
 
 def load_intents():
