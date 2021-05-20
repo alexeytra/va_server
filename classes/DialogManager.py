@@ -3,7 +3,7 @@ from flask import request
 
 from utils.user import *
 from constants.constants import BASE_URL, ANSWERS_FOR_UNRECOGNIZED_QUESTIONS, ANSWERS_FOR_WRONG_ANSWERS, \
-    ANSWERS_FOR_GOOD_RESPONSE, GREETING_RESPONSE
+    ANSWERS_FOR_GOOD_RESPONSE, GREETING_RESPONSE, LOGIN_USER_RESPONSE, LOGOUT_USER_RESPONSE
 from utils.audio_worker import text_to_speech
 from utils.intent_processing import get_answer_from_tag, load_additional_info
 from utils.load_data import classes, ic_model, ic_tokenizer, label_encoder, seq2seq_model, seq2seq_tokenizer, max_len
@@ -140,6 +140,19 @@ class DialogManager:
         self.__process_greeting()
         user_name = get_user_name(user_type, access_token)
         self.__answer += ', ' + user_name + '! ' + random.choice(GREETING_RESPONSE)
+        if self.__voice:
+            text_to_speech(self.__answer)
+
+    def get_response_user_auth(self, data):
+        user_type = data['userType']
+        access_token = data['accessToken']
+        user_name = get_user_name(user_type, access_token)
+        self.__answer += random.choice(LOGIN_USER_RESPONSE).replace('*', user_name)
+        if self.__voice:
+            text_to_speech(self.__answer)
+
+    def get_response_user_logout(self):
+        self.__answer += random.choice(LOGOUT_USER_RESPONSE)
         if self.__voice:
             text_to_speech(self.__answer)
 

@@ -4,6 +4,12 @@ from keras.preprocessing.sequence import pad_sequences
 import re
 
 
+def clean_text(sentence: str):
+    sentence = sentence.lower()
+    sentence = re.sub(r"[-()\"#/@;:<>{}`+=~|.!?,]", "", sentence)
+    return sentence
+
+
 class Seq2SeqModel:
     def __init__(self, model, tokenizer, max_len_questions):
         self.__model = model
@@ -12,14 +18,9 @@ class Seq2SeqModel:
         self.__encoder_model, self.__decoder_model = self.__make_inference_models()
 
     def __str_to_tokens(self, sentence: str):
-        words = self.__clean_text(sentence).lower().split()
+        words = clean_text(sentence).lower().split()
         return pad_sequences(self.__tokenizer.texts_to_sequences([words]), maxlen=self.__max_len_questions,
                              padding='post')
-
-    def __clean_text(self, sentence: str):
-        sentence = sentence.lower()
-        sentence = re.sub(r"[-()\"#/@;:<>{}`+=~|.!?,]", "", sentence)
-        return sentence
 
     def __make_inference_models(self):
         encoder_inputs = self.__model.input[0]
