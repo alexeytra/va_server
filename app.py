@@ -72,7 +72,7 @@ def process_user_auth_response():
     return va_response.get_response()
 
 
-@app.route(BASE_URL + 'user/logout', methods=['GET'])
+@app.route(BASE_URL + 'user/logout', methods=['POST'])
 def process_user_logout_response():
     va_response = DialogManager(voice=request.json['voice'])
     va_response.get_response_user_logout()
