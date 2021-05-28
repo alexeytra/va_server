@@ -40,7 +40,7 @@ def get_audio_answer():
 @app.route(BASE_URL + 'answer/wrong', methods=['POST'])
 def process_wrong_answer():
     data = request.json
-    va_response = DialogManager(answer_generating=True, voice=False)
+    va_response = DialogManager(voice=data['voice'])
     va_response.process_wrong_answer(data)
     return va_response.get_response()
 

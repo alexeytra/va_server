@@ -64,7 +64,8 @@ class DialogManager:
 
     def process_wrong_answer(self, data):
         self.__answer = random.choice(ANSWERS_FOR_WRONG_ANSWERS)
-        text_to_speech(self.__answer)
+        if self.__voice:
+            text_to_speech(self.__answer)
 
     def __process_struct_info(self):
         return load_additional_info(self.__entity['key'], self.__intent)
