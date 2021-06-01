@@ -21,6 +21,11 @@
       "keyWords": ["Строительный факультет", "СФ", "строительного"]
     },
     {
+      "code": "fac_enf",
+      "classifier": "FACULTY",
+      "keyWords": ["электротехнический факультет", "ЭТФ", "электротехнического"]
+    },
+    {
       "code": "auditorium_aud100",
       "classifier": "AUDITORIUM",
       "keyWords": ["100", "сотая"]

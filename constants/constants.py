@@ -45,7 +45,9 @@ DEPARTMENTS = {
     'ТЭС': 'kaf_tes',
     'Строительный': 'fac_sf',
     'строительного': 'fac_sf',
-    'СФ': 'fac_sf'
+    'СФ': 'fac_sf',
+    'ЭТФ': 'fac_etf',
+    'электротехнический': 'fac_etf'
 }
 
 CLASSROOMS = {
