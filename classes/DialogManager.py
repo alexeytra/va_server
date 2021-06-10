@@ -1,7 +1,8 @@
 from datetime import datetime
 from flask import request
 
-from utils.user import *
+from functions.index import user_intent, default_response
+from functions.user import *
 from constants.constants import BASE_URL, ANSWERS_FOR_UNRECOGNIZED_QUESTIONS, ANSWERS_FOR_WRONG_ANSWERS, \
     ANSWERS_FOR_GOOD_RESPONSE, GREETING_RESPONSE, LOGIN_USER_RESPONSE, LOGOUT_USER_RESPONSE
 from utils.audio_worker import text_to_speech
@@ -14,7 +15,7 @@ import random
 
 
 class DialogManager:
-    def __init__(self, voice=False, answer_generating=False):
+    def __init__(self, voice=False, answer_generating=False, user_type='', user_token=''):
         if voice:
             self.__url_audio = request.host_url + BASE_URL[1:] + 'answer/audio'
         else:
@@ -31,6 +32,8 @@ class DialogManager:
         self.__intent_accuracy = 0.0
         self.__options_for_questions = []
         self.__additional_response = ""
+        self.__user_type = user_type
+        self.__user_token = user_token
 
     def __extract_info(self):
         entity_extractor = EntityExtractor()
@@ -85,8 +88,14 @@ class DialogManager:
         self.__seq2seq = False
 
     def __process_answer(self, data):
-        self.__answer = data[0]
-        # self.__extract_info()
+        user_answer = user_intent.get(self.__intent, default_response)(data[0], self.__user_type, self.__user_token)
+        if user_answer != '':
+            self.__answer = user_answer
+            if self.__user_token == '':
+                self.__additional_response = ''
+        else:
+            self.__answer = data[0]
+
         if self.__struct_info != '':
             if self.__entity['type'] == self.__intent.split('_')[0]:
                 self.__answer = self.__answer.replace('*', self.__struct_info)
@@ -107,7 +116,8 @@ class DialogManager:
             self.__process_answer_with_add_info(data)
         else:
             self.__process_answer(data)
-            if self.__struct_info == '' and '*' in data[0]:
+            if self.__struct_info == '' and '*' in self.__answer:
+            # if self.__struct_info == '' and '*' in data[0]:
                 self.__answer = 'Я не понял твой вопрос'
 
             if self.__voice:
